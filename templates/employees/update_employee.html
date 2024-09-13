@@ -1,0 +1,22 @@
+{% extends 'common/base.html' %}
+
+{% block title %} Update Employee {% endblock title%}
+{% block content %}
+<div class="container">
+    <center>
+        <br><br>
+        <div class="container shadow p-3 mb-5 bg-body-tertiary rounded border">
+            <strong>Update Employee</strong>
+            <br><br>
+            <div class="container">
+                <form action="" method=POST enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <input type="submit" value="Submit" class="btn btn-secondary">
+                </form>
+            </div>
+        </div>
+    </center>
+</div>
+
+{% endblock %}

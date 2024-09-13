@@ -13,6 +13,54 @@
 {% block content %}
 <div class="container">
     <br><br>
-    {{employees}}
+    <table class="table table-bordered border-primary table-sm table-responsive text-center ">
+            <thead>
+              <tr>
+                <th scope="col">Photo</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Date of Birth</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for employee in employees %}
+              <tr>
+                <td> 
+                  <img class="img-thumbnail" height="100" width ="100" src="{{employee.photo.url}}" alt="..." />
+                </td>
+                <td>{{employee.first_name}} {{employee.last_name}}</td>
+                <td>{{employee.email}}</td>
+                <td>{{employee.mobile}}</td>
+                <td>{{employee.date_of_birth}}</td>
+                <td>
+                   <div class="d-flex justify-content-evenly">
+                    <a href="{% url 'update-employee' employee.id %}" ><img height="30" width="25" src="media/icons/edit.png" alt=""></a>
+                    <a href="{% url 'delete-employee' employee.id %}"><img height="30" width="25" src="media/icons/delete1.png" alt=""></a>
+                   </div>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-left">
+                {% if employees.has_previous %}
+                <li class="page-item"><a href="?page=1" class="page-link">&laquo; First</a></li>
+                    <li class="page-item"><a href="?page={{employees.previous_page_number}}" class="page-link">Previous</a></li>
+                {% endif %}
+                {% for i in nums %}
+                <li class="page-item disabled"><a href="#" class="page-link"> {{forloop.counter}}</a></li>
+                {% endfor%}
+        
+                {% if employees.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{employees.next_page_number}}" >next</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{employees.paginator.num_pages}}" >Last&raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+
 </div>
 {% endblock content %}
