@@ -1,0 +1,70 @@
+{% extends 'common/base.html' %}
+
+{% block title %} Add Employee {% endblock title%}
+{% block content %}
+<center>
+    <br><br>
+   <div class="container  border border-primary">
+    <strong>Search Result</strong>
+    {% if search %}
+    <table class="table table-bordered border-primary table-sm table-responsive text-center ">
+      <thead>
+        <tr>
+          <th scope="col">Photo</th>
+          <th scope="col">Full Name
+            <a href="?order_by=first_name">
+              <img height="30" width ="30" src="http://localhost:8000/media/icons/sort.png" alt="">
+            </a>
+          </th>
+          <th scope="col">Email
+            <a href="?order_by=email">
+              <img height="30" width ="30" src="http://localhost:8000/media/icons/sort.png" alt="">
+            </a>
+          </th>
+          <th scope="col">Mobile
+            <a href="?order_by=mobile">
+              <img height="30" width ="30" src="http://localhost:8000/media/icons/sort.png" alt="">
+            </a>
+          </th>
+          <th scope="col">Date of Birth
+            <a href="?order_by=date_of_birth">
+              <img height="30" width ="30" src="http://localhost:8000/media/icons/sort.png" alt="">
+            </a>
+          </th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for employee in employees %}
+        <tr>
+          {% if employee.photo %}
+          <td> 
+            <img class="img-thumbnail" height="100" width ="100" src="{{employee.photo.url}}"/>
+          </td>
+          {% else %}
+          <td> 
+            <img class="img-thumbnail" height="100" width ="100" src="http://localhost:8000/media/icons/user.png"/>
+          </td>
+          {% endif %}
+          <td>{{employee.first_name}} {{employee.last_name}}</td>
+          <td>{{employee.email}}</td>
+          <td>{{employee.mobile}}</td>
+          <td>{{employee.date_of_birth|date:"SHORT_DATE_FORMAT"}}</td>
+      
+        <td>
+          <div class="d-flex justify-content-evenly">
+           <a href="{% url 'update-employee' employee.id %}" ><img height="30" width="25" src="http://localhost:8000/media/icons/edit.png" alt=""></a>
+           <a href="{% url 'delete-employee' employee.id %}"><img height="30" width="25" src="http://localhost:8000/media/icons/delete1.png" alt=""></a>
+          </div>
+       </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No search result!!</p>
+    {% endif %}
+   </div>
+      
+</center>
+{% endblock %}

@@ -2,9 +2,11 @@ from django.shortcuts import render, HttpResponseRedirect, redirect
 from .models import employeeDetails
 from .forms import employeeForm
 from django.core.paginator import Paginator
+from django.db.models import Q
 
-def employeeList(request):
-    employees = employeeDetails.objects.all()
+def employeeList(request, sort_name='first_name'):
+    order_by = request.GET.get('order_by', sort_name)
+    employees = employeeDetails.objects.all().order_by(order_by)
     p = Paginator(employees, 5)
     page = request.GET.get('page')
     employees = p.get_page(page)
@@ -36,3 +38,19 @@ def deleteEmployee(request, employee_id):
     employee = employeeDetails.objects.get(pk=employee_id)
     employee.delete()
     return redirect('employee-list')
+
+def searchEmployee(request):
+    if request.method == "GET":
+        name = request.GET.get('name')
+        email = request.GET.get('email')
+        dob = request.GET.get('dob')
+        phone = request.GET.get('phone')
+
+        if name != '' and email != '' and dob != '' and phone != '':
+            employees = employeeDetails.objects.filter((Q(first_name__icontains=name) | Q(email__icontains=email)) & (Q(date_of_birth__exact=dob) | Q(mobile__exact=phone)))
+            return render(request, 'employees/search.html', {'search':[name, email, dob, phone], 'employees':employees})
+        
+        return render(request, 'employees/search.html', {})
+    else:
+        return render(request, 'employees/search.html', {})
+
