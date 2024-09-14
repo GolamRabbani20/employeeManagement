@@ -7,11 +7,12 @@ from django.db.models import Q
 def employeeList(request, sort_name='first_name'):
     order_by = request.GET.get('order_by', sort_name)
     employees = employeeDetails.objects.all().order_by(order_by)
+    total_employees = len(employees)
     p = Paginator(employees, 5)
-    page = request.GET.get('page')
-    employees = p.get_page(page)
+    page_no = request.GET.get('page')
+    employees = p.get_page(page_no)
     nums = 'a' * employees.paginator.num_pages
-    return render(request, 'employees/employee_list.html', {'employees': employees, 'nums': nums})
+    return render(request, 'employees/employee_list.html', {'employees': employees, 'nums': nums, 'lowerlimit':(int(page_no)*5)-4, 'upperlimit':int(page_no)*5, 'total_employees': total_employees})
 
 def addEmployee(request):
     submitted = False
