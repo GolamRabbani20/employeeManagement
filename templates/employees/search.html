@@ -5,8 +5,8 @@
 <center>
     <br><br>
    <div class="container  border border-primary">
-    <strong>Search Result</strong>
-    {% if search %}
+    <strong>Search Results-({{search_items}})</strong>
+    {% if search_items != 0 %}
     <table class="table table-bordered border-primary table-sm table-responsive text-center ">
       <thead>
         <tr>
@@ -64,9 +64,16 @@
       </tr>
       {% endfor %}
       </tbody>
+      <tfoot>
+      <div class="container justify-content-center">
+        <tr>
+          <td colspan="6">&copy;Copyright 2024</td>
+        </tr>
+      </div>
+    </tfoot>
     </table>
     {% else %}
-      <p>No search result!!</p>
+      <p>Sorry! No search result. Please try again!!!</p>
     {% endif %}
    </div>
    <script type="text/javascript">

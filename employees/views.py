@@ -7,7 +7,7 @@ from django.db.models import Q
 def employeeList(request, sort_name='first_name'):
     order_by = request.GET.get('order_by', sort_name)
     all_employees = employeeDetails.objects.all().order_by(order_by)
-    ipp = 5
+    ipp = 10
     p = Paginator(all_employees, ipp)
     page = request.GET.get('page')
 
@@ -20,7 +20,7 @@ def employeeList(request, sort_name='first_name'):
     employees = p.get_page(page)
     nums = 'a' * employees.paginator.num_pages
 
-    return render(request, 'employees/employee_list.html', {'employees': employees, 'nums': nums, 'total_employees': len(all_employees), 'lowerlimit': page_no*ipp-4, 'upperlimit': page_no*ipp, 'page_no': page_no})
+    return render(request, 'employees/employee_list.html', {'employees': employees, 'nums': nums, 'total_employees': len(all_employees), 'lowerlimit': page_no*ipp-9, 'upperlimit': page_no*ipp, 'page_no': page_no})
 
 def addEmployee(request):
     submitted = False
@@ -57,26 +57,25 @@ def searchEmployee(request):
 
         if name != '' and email != '' and dob != '' and phone != '':
             employees = employeeDetails.objects.filter(((Q(first_name__icontains=name)|Q(last_name__icontains=name)) | Q(email__icontains=email)) & (Q(date_of_birth__exact=dob) | Q(mobile__exact=phone)))
-            return render(request, 'employees/search.html', {'search':[name, email, dob, phone], 'employees':employees})
-        
+          
         elif phone != '':
             employees = employeeDetails.objects.filter(mobile__exact=phone)
-            return render(request, 'employees/search.html', {'search':[name, email, dob, phone], 'employees':employees})
-        
+           
         elif dob != '':
             employees = employeeDetails.objects.filter(date_of_birth__exact=dob)
-            return render(request, 'employees/search.html', {'search':[name, email, dob, phone], 'employees':employees})
-        
+          
         elif name != '':
             employees = employeeDetails.objects.filter(Q(first_name__icontains=name)|Q(last_name__icontains=name))
-            return render(request, 'employees/search.html', {'search':[name, email, dob, phone], 'employees':employees})
+            
         
         elif email != '':
             employees = employeeDetails.objects.filter(email__icontains=email)
-            return render(request, 'employees/search.html', {'search':[name, email, dob, phone], 'employees':employees})
+
         else:
-            return render(request, 'employees/search.html', {})
+            return render(request, 'employees/search.html', {})  
         
+        return render(request, 'employees/search.html', {'search_items': len(employees), 'employees':employees})
+          
     else:
         return render(request, 'employees/search.html', {})
 

@@ -11,8 +11,9 @@
         <strong>Add Employee</strong>
         <br><br>
         {% if submitted %}
-            Your Employee has been Added Successfully!<br><br>
+            Employee has been Added Successfully!<br><br>
             <a href="{% url 'employee-list' %}" class="btn btn-secondary ">Go To List</a> 
+            <a href="{% url 'add-employee' %}" class="btn btn-success ">Add More</a>
         {% else %}
             <div class="container">
                 <form action="" method=POST enctype="multipart/form-data">
