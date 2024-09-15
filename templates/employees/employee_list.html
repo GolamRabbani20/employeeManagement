@@ -99,26 +99,28 @@
               <tr >
                 <td colspan="6">
                   <p></p>
-                  <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        {% if employees.has_previous %}
-                        
-                            <li class="page-item"><a href="?page={{employees.previous_page_number}}" class="page-link">&laquo;</a></li>
-                        {% endif %}
-                        {% for i in nums %}
-                        <li class="page-item"><a href="?page={{forloop.counter}}" class="page-link"> {{forloop.counter}}</a></li>
-                        {% endfor%}
-                
-                        {% if employees.has_next %}
-                            <li class="page-item"><a class="page-link" href="?page={{employees.next_page_number}}" >&raquo;</a></li>
-                        {% endif %}
-                    </ul>
-                </nav>
-                {% if employees.paginator.num_pages == page_no %}
-                  <p>Showing {{lowerlimit}} to {{total_employees}} out of {{total_employees}}</p>
-                {% else %}
-                  <p>Showing {{lowerlimit}} to {{upperlimit}} out of {{total_employees}}</p>
-                {% endif %}
+                   <div class="container d-flex justify-content-between">
+                      {% if employees.paginator.num_pages == page_no %}
+                        Showing {{lowerlimit}} to {{total_employees}} out of {{total_employees}}
+                        {% else %}
+                        Showing {{lowerlimit}} to {{upperlimit}} out of {{total_employees}}
+                      {% endif %}
+                  
+                      <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {% if employees.has_previous %}
+                                <li class="page-item"><a href="?page={{employees.previous_page_number}}" class="page-link">&laquo;</a></li>
+                            {% endif %}
+                            {% for i in nums %}
+                            <li class="page-item"><a href="?page={{forloop.counter}}" class="page-link"> {{forloop.counter}}</a></li>
+                            {% endfor%}
+                    
+                            {% if employees.has_next %}
+                                <li class="page-item"><a class="page-link" href="?page={{employees.next_page_number}}" >&raquo;</a></li>
+                            {% endif %}
+                        </ul>
+                      </nav>
+                   </div>
                 </td>
               </tr>
             </tfoot>
