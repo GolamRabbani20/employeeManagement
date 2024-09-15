@@ -7,7 +7,7 @@ class employeeDetails(models.Model):
     last_name = models.CharField(max_length=20, blank=False)
     email = models.EmailField()
     mobile = models.CharField(max_length=20, blank=False)
-    date_of_birth = models.DateField(blank=False, default=now()-timedelta(days=2065))
+    date_of_birth = models.DateField(blank=False) #default=now()-timedelta(days=2065)
     photo = models.ImageField(blank=True, upload_to='profile_photos/')
 
     def save(self, *args, **kwargs):

@@ -21,7 +21,7 @@ class employeeForm(ModelForm):
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter last name'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email Adderss'}),
             'mobile': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Mobile Number'}), 
-            'date_of_birth': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Date of Birth'}),
+            'date_of_birth': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Select a date'}),
         }
     #     date_of_birth = forms.DateField(
     #     widget=forms.DateInput(format="%d/%m/%Y",
